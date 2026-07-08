@@ -6,6 +6,8 @@ import { COVER_PLACEHOLDER } from '../lib/constants';
 import type { Book } from '../lib/types';
 import ShelfControls from '../components/ShelfControls';
 import FavoriteButton from '../components/FavoriteButton';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
 import styles from './BookDetail.module.scss';
 
 /** Strip the light HTML Google includes in descriptions down to plain text. */
@@ -45,12 +47,12 @@ function BookDetail() {
     };
   }, [id]);
 
-  if (loading) return <p className={styles.state}>Loading book…</p>;
+  if (loading) return <Spinner label="Loading book…" />;
 
   if (error || !book) {
     return (
       <div className={styles.state}>
-        <p>We couldn't load this book.</p>
+        <ErrorMessage message="We couldn't load this book." />
         <Link to="/search">← Back to search</Link>
       </div>
     );

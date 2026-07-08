@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { searchBooks } from '../lib/api';
 import type { Book } from '../lib/types';
 import BookCard from './BookCard';
+import Spinner from './Spinner';
 import styles from './CuratedRow.module.scss';
 
 type CuratedRowProps = {
@@ -41,7 +42,7 @@ function CuratedRow({ category }: CuratedRowProps) {
     <section className={styles.row}>
       <h2 className={styles.heading}>{category}</h2>
 
-      {loading && <p className={styles.state}>Loading {category} books…</p>}
+      {loading && <Spinner label={`Loading ${category} books…`} />}
       {error && (
         <p className={styles.state}>Couldn't load {category} books right now.</p>
       )}

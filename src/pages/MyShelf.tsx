@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ShelfTabs from '../components/ShelfTabs';
 import BookCard from '../components/BookCard';
 import ShelfControls from '../components/ShelfControls';
+import EmptyState from '../components/EmptyState';
 import { useShelf } from '../hooks/useLibrary';
 import { SHELF_LABELS } from '../lib/constants';
 import type { ShelfStatus } from '../lib/types';
@@ -35,10 +36,9 @@ function MyShelf() {
       <ShelfTabs active={active} onChange={setActive} counts={counts} />
 
       {entries.length === 0 ? (
-        <div className={styles.empty}>
-          <p>Nothing in “{SHELF_LABELS[active]}” yet.</p>
+        <EmptyState title={`Nothing in “${SHELF_LABELS[active]}” yet.`}>
           <Link to="/search">Find books to add →</Link>
-        </div>
+        </EmptyState>
       ) : (
         <div className={styles.grid}>
           {entries.map((entry) => (

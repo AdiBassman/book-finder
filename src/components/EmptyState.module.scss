@@ -1,0 +1,23 @@
+.empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 3rem 1rem;
+}
+
+.icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.body {
+  a {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+}

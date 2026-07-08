@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import EmptyState from '../components/EmptyState';
 import { useLibrary } from '../hooks/useLibrary';
 import { computeStats, type RankedItem } from '../lib/stats';
 import { SHELF_LABELS } from '../lib/constants';
@@ -36,10 +37,11 @@ function Stats() {
 
   if (stats.total === 0 && stats.favorites === 0) {
     return (
-      <div className={styles.empty}>
-        <h1>Stats</h1>
-        <p>Add some books to see your reading stats.</p>
-        <Link to="/search">Find books →</Link>
+      <div>
+        <h1 className={styles.heading}>Stats</h1>
+        <EmptyState icon="📊" title="Add some books to see your reading stats.">
+          <Link to="/search">Find books →</Link>
+        </EmptyState>
       </div>
     );
   }

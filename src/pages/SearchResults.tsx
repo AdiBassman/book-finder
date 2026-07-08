@@ -4,6 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import BookCard from '../components/BookCard';
+import Spinner from '../components/Spinner';
+import EmptyState from '../components/EmptyState';
+import ErrorMessage from '../components/ErrorMessage';
 import { useDebounce } from '../hooks/useDebounce';
 import { useBookSearch } from '../hooks/useBookSearch';
 import type { Book, SortOption } from '../lib/types';
@@ -59,19 +62,15 @@ function SearchResults() {
       />
 
       {!hasQuery && (
-        <p className={styles.state}>Search for a book to get started.</p>
+        <EmptyState icon="🔍" title="Search for a book to get started." />
       )}
 
-      {hasQuery && loading && <p className={styles.state}>Searching…</p>}
+      {hasQuery && loading && <Spinner label="Searching…" />}
 
-      {hasQuery && error && (
-        <p className={styles.state}>
-          Something went wrong. Please try again in a moment.
-        </p>
-      )}
+      {hasQuery && error && <ErrorMessage />}
 
       {hasQuery && !loading && !error && displayBooks.length === 0 && (
-        <p className={styles.state}>No results found.</p>
+        <EmptyState icon="🔍" title="No results found." />
       )}
 
       {hasQuery && !loading && !error && displayBooks.length > 0 && (
