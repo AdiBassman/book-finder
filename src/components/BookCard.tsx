@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { COVER_PLACEHOLDER } from '../lib/constants';
 import type { Book } from '../lib/types';
+import FavoriteButton from './FavoriteButton';
 import styles from './BookCard.module.scss';
 
 type BookCardProps = {
@@ -21,6 +22,7 @@ function BookCard({ book }: BookCardProps) {
           alt={`Cover of ${book.title}`}
           loading="lazy"
         />
+        <FavoriteButton book={book} overlay />
       </div>
       <div className={styles.body}>
         <h3 className={styles.title} title={book.title}>

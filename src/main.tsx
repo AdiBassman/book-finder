@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
+import { LibraryProvider } from './context/LibraryContext';
 import { router } from './router';
 import './styles/globals.scss';
 
@@ -13,6 +14,8 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LibraryProvider>
+      <RouterProvider router={router} />
+    </LibraryProvider>
   </StrictMode>,
 );

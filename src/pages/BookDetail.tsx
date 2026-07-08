@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import { getBook } from '../lib/api';
 import { COVER_PLACEHOLDER } from '../lib/constants';
 import type { Book } from '../lib/types';
+import ShelfControls from '../components/ShelfControls';
+import FavoriteButton from '../components/FavoriteButton';
 import styles from './BookDetail.module.scss';
 
 /** Strip the light HTML Google includes in descriptions down to plain text. */
@@ -80,6 +82,13 @@ function BookDetail() {
       <div className={styles.info}>
         <h1 className={styles.title}>{book.title}</h1>
         <p className={styles.authors}>{authors}</p>
+
+        <div className={styles.actions}>
+          <FavoriteButton book={book} />
+          <span className={styles.actionsLabel}>Add to favorites</span>
+        </div>
+
+        <ShelfControls book={book} />
 
         <ul className={styles.meta}>
           {book.publisher && (

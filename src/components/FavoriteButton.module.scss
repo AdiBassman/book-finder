@@ -1,0 +1,30 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: scale(1.12);
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  border-color: transparent;
+}
+
+.active {
+  border-color: transparent;
+}

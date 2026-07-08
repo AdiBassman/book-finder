@@ -54,6 +54,18 @@
   font-size: 1.05rem;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.actionsLabel {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
 .meta {
   list-style: none;
   padding: 0;
