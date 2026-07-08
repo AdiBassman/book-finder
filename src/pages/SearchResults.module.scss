@@ -1,0 +1,24 @@
+.searchRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.state {
+  text-align: center;
+  color: var(--color-muted);
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+.count {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 1.25rem;
+}
