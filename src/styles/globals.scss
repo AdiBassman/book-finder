@@ -55,15 +55,3 @@ img {
   margin: 0 auto;
   padding: 2rem 1.5rem;
 }
-
-.home-placeholder {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-  text-align: center;
-
-  &__note {
-    color: var(--color-muted);
-    font-style: italic;
-  }
-}
