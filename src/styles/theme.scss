@@ -1,0 +1,34 @@
+// Warm "library" theme. Light is the default; dark overrides via [data-theme].
+// Components read these CSS custom properties instead of hard-coded colors.
+
+:root,
+:root[data-theme='light'] {
+  --color-bg: #f7f1e8; // cream paper
+  --color-surface: #fffdf8; // cards / panels
+  --color-surface-alt: #f0e7d8;
+  --color-text: #2b2320; // ink
+  --color-muted: #8a7a6a; // secondary text
+  --color-accent: #a5622d; // warm amber-brown
+  --color-accent-hover: #874d20;
+  --color-border: #e6dccc;
+  --color-shadow: rgba(60, 42, 24, 0.12);
+
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --radius: 0.6rem;
+  --shadow-card: 0 2px 8px var(--color-shadow);
+  --max-width: 72rem;
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #201a16;
+  --color-surface: #2a2320;
+  --color-surface-alt: #332b26;
+  --color-text: #f0e7db;
+  --color-muted: #a99a88;
+  --color-accent: #d68b4f;
+  --color-accent-hover: #e6a065;
+  --color-border: #3a322c;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+}
