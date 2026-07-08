@@ -1,3 +1,4 @@
+import { cachedFetchJson } from './cache';
 import { API_BASE, API_KEY, DEFAULT_MAX_RESULTS } from './constants';
 import type {
   Book,
@@ -55,12 +56,9 @@ export async function searchBooks(
   });
   if (API_KEY) params.set('key', API_KEY);
 
-  const res = await fetch(`${API_BASE}/volumes?${params.toString()}`);
-  if (!res.ok) {
-    throw new Error(`Failed to search books (status ${res.status})`);
-  }
-
-  const data: RawVolumeListResponse = await res.json();
+  const data = await cachedFetchJson<RawVolumeListResponse>(
+    `${API_BASE}/volumes?${params.toString()}`,
+  );
   return (data.items ?? []).map(normalizeBook);
 }
 
@@ -69,11 +67,6 @@ export async function getBook(id: string): Promise<Book> {
   const url = new URL(`${API_BASE}/volumes/${encodeURIComponent(id)}`);
   if (API_KEY) url.searchParams.set('key', API_KEY);
 
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Failed to load book (status ${res.status})`);
-  }
-
-  const raw: RawVolume = await res.json();
+  const raw = await cachedFetchJson<RawVolume>(url.toString());
   return normalizeBook(raw);
 }
