@@ -1,50 +1,86 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import SearchBar from '../components/SearchBar';
+import FilterBar from '../components/FilterBar';
 import BookCard from '../components/BookCard';
+import { useDebounce } from '../hooks/useDebounce';
 import { useBookSearch } from '../hooks/useBookSearch';
+import type { Book, SortOption } from '../lib/types';
 import styles from './SearchResults.module.scss';
 
-/** Search page: reads `?q=` from the URL and shows a grid of results. */
+/** Build the Google Books query from the free-text input and category. */
+function buildQuery(text: string, category: string): string {
+  const parts: string[] = [];
+  if (text.trim()) parts.push(text.trim());
+  if (category) parts.push(`subject:${category}`);
+  return parts.join(' ');
+}
+
+/** Search page: live (debounced) search with category filter and sorting. */
 function SearchResults() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('q') ?? '';
 
-  const { books, loading, error } = useBookSearch(query);
+  const [input, setInput] = useState(searchParams.get('q') ?? '');
+  const [category, setCategory] = useState('');
+  const [sort, setSort] = useState<SortOption>('relevance');
 
-  const handleSearch = (next: string) => {
-    setSearchParams({ q: next });
-  };
+  const debouncedInput = useDebounce(input, 400);
+
+  // Keep the URL's ?q= in sync with the debounced text so results are shareable.
+  useEffect(() => {
+    setSearchParams(debouncedInput ? { q: debouncedInput } : {}, {
+      replace: true,
+    });
+  }, [debouncedInput, setSearchParams]);
+
+  const query = buildQuery(debouncedInput, category);
+  const { books, loading, error } = useBookSearch(query, sort);
+
+  // 'relevance' and 'newest' are handled by the API; 'title' is sorted here.
+  const displayBooks = useMemo<Book[]>(() => {
+    if (sort !== 'title') return books;
+    return [...books].sort((a, b) => a.title.localeCompare(b.title));
+  }, [books, sort]);
+
+  const hasQuery = query.length > 0;
 
   return (
     <div>
       <div className={styles.searchRow}>
-        <SearchBar initialValue={query} onSubmit={handleSearch} autoFocus />
+        <SearchBar value={input} onChange={setInput} autoFocus />
       </div>
 
-      {!query && (
+      <FilterBar
+        category={category}
+        onCategoryChange={setCategory}
+        sort={sort}
+        onSortChange={setSort}
+      />
+
+      {!hasQuery && (
         <p className={styles.state}>Search for a book to get started.</p>
       )}
 
-      {query && loading && <p className={styles.state}>Searching…</p>}
+      {hasQuery && loading && <p className={styles.state}>Searching…</p>}
 
-      {query && error && (
+      {hasQuery && error && (
         <p className={styles.state}>
           Something went wrong. Please try again in a moment.
         </p>
       )}
 
-      {query && !loading && !error && books.length === 0 && (
-        <p className={styles.state}>No results for “{query}”.</p>
+      {hasQuery && !loading && !error && displayBooks.length === 0 && (
+        <p className={styles.state}>No results found.</p>
       )}
 
-      {query && !loading && !error && books.length > 0 && (
+      {hasQuery && !loading && !error && displayBooks.length > 0 && (
         <>
           <p className={styles.count}>
-            {books.length} result{books.length === 1 ? '' : 's'} for “{query}”
+            {displayBooks.length} result{displayBooks.length === 1 ? '' : 's'}
           </p>
           <div className={styles.grid}>
-            {books.map((book) => (
+            {displayBooks.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
           </div>
