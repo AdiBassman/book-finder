@@ -1,0 +1,47 @@
+// Global base styles. Theme variables (warm-library light/dark) arrive in Task 3.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: #2b2320;
+  background-color: #f7f1e8; // temporary cream; replaced by theme vars later
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.app__main {
+  min-height: 100vh;
+}
+
+.home-placeholder {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  text-align: center;
+
+  &__note {
+    color: #8a7a6a;
+    font-style: italic;
+  }
+}
