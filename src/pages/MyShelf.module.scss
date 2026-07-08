@@ -1,0 +1,26 @@
+.heading {
+  margin: 0 0 1.25rem;
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 3rem 1rem;
+
+  a {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 1.5rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
